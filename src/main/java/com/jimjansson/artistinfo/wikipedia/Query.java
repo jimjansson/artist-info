@@ -2,7 +2,6 @@ package com.jimjansson.artistinfo.wikipedia;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
 import java.util.Map;
 
 /**

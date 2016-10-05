@@ -32,7 +32,7 @@ public class ArtistInfo {
 
     private static final String COVER_ART_ARCHIVE_REQUEST_TEMPLATE = "http://coverartarchive.org/release-group/%s";
 
-    private static final String WIKIPEDIA_REQUEST_TEMPPLATE = "https://en.wikipedia.org/w/api.php?" +
+    private static final String WIKIPEDIA_REQUEST_TEMPLATE = "https://en.wikipedia.org/w/api.php?" +
             "action=query&" +
             "format=json&" +
             "prop=extracts&exintro=true&redirects=true&titles=%s";
@@ -48,13 +48,13 @@ public class ArtistInfo {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getArtistInfo(@PathParam("mbid") String mbid) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArtistInfoResponse getArtistInfo(@PathParam("mbid") String mbid) {
         try {
             MusicBrainzResponse musicBrainzResponse = getMusicBrainzResponse(getMusicBrainzHttpRequest(mbid));
             String wikipediaDescription = getWikipediaDescription(musicBrainzResponse);
             List<Album> albumList = computeAlbumList(musicBrainzResponse);
-            return new ArtistInfoResponse(mbid, wikipediaDescription, albumList).toString();
+            return new ArtistInfoResponse(mbid, wikipediaDescription, albumList);
         } catch (IOException e) {
             System.out.println(e.toString());
             return null;
@@ -98,7 +98,7 @@ public class ArtistInfo {
     }
 
     private String getWikipediaHttpRequest(String title) {
-        return String.format(WIKIPEDIA_REQUEST_TEMPPLATE, title);
+        return String.format(WIKIPEDIA_REQUEST_TEMPLATE, title);
     }
 
     private String extractWikipediaTitleFromMusicBrainzResponse(MusicBrainzResponse musicBrainzResponse) {

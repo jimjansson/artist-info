@@ -12,6 +12,10 @@ public class ArtistInfoResponse {
     private String description;
     private List<Album> albums;
 
+    public ArtistInfoResponse() {
+
+    }
+
     public ArtistInfoResponse(String mbid, String description, List<Album> albums) {
         this.mbid = mbid;
         this.description = description;

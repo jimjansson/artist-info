@@ -8,12 +8,9 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 
-/**
- * ArtistInfoRestServer class.
- *
- */
+
 public class ArtistInfoRestServer {
-    // Base URI the Grizzly HTTP server will listen on
+    // Base URI that the Grizzly HTTP server will listen on
     public static final URI BASE_URI  = UriBuilder.fromUri("http://localhost/").port(8081).build();
 
     /**
@@ -31,14 +28,14 @@ public class ArtistInfoRestServer {
     }
 
     /**
-     * ArtistInfoRestServer method.
+     * ArtistInfoRestServer main method.
      * @param args
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        System.out.println(String.format("Artist info REST server started at URI: %s " +
-                "\nHit enter to stop it...", BASE_URI));
+        System.out.println(String.format("Artist Info REST server started at URI: %s", BASE_URI));
+        System.out.println("Hit enter to stop it...");
         System.in.read();
         server.shutdownNow();
     }

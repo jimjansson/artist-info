@@ -9,6 +9,10 @@ public class Album {
     private String title;
     private String image;
 
+    public Album() {
+
+    }
+
     public Album(String id, String title, String image) {
         this.id = id;
         this.title = title;

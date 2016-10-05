@@ -1,5 +1,6 @@
 package com.jimjansson.artistinfo.musicbrainz;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -8,7 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Relation {
 
+    @JsonIgnore
+    private static final String RESOURCE = "resource";
+
     private String type;
+    private Url url;
 
     public String getType() {
         return type;
@@ -16,5 +21,13 @@ public class Relation {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setUrl(Url url) {
+        this.url = url;
+    }
+
+    public Url getUrl() {
+        return url;
     }
 }

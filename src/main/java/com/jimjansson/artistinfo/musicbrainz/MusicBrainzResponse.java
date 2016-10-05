@@ -1,15 +1,19 @@
 package com.jimjansson.artistinfo.musicbrainz;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Jim on 2016-10-04.
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class MusicBrainzResponse {
+
+    private static final String WIKIPEDIA_TYPE_STRING = "wikipedia";
 
     private String id;
     private String name;
@@ -49,5 +53,25 @@ public class MusicBrainzResponse {
 
     public List<ReleaseGroup> getReleaseGroups() {
         return releaseGroups;
+    }
+
+    @JsonIgnore
+    public String getWikipediaTitle() {
+        if(getRelations() != null) {
+            Optional<Relation> wikiRelation = getRelations().stream()
+                    .filter(relation -> WIKIPEDIA_TYPE_STRING.equals(relation.getType())).findFirst();
+            if(wikiRelation.isPresent()) {
+                return getWikipediaTitleFromUrl(wikiRelation.get().getUrl().getResource());
+            }
+        }
+        return null;
+    }
+
+    @JsonIgnore
+    private static String getWikipediaTitleFromUrl(String wikipediaUrl) {
+        if(wikipediaUrl != null) {
+            return wikipediaUrl.substring(wikipediaUrl.lastIndexOf("/") + 1);
+        }
+        return null;
     }
 }

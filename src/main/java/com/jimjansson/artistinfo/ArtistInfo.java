@@ -1,13 +1,12 @@
 package com.jimjansson.artistinfo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kevinsawicki.http.HttpRequest;
 import com.jimjansson.artistinfo.coverartarchive.ReleaseGroupResponse;
 import com.jimjansson.artistinfo.musicbrainz.MusicBrainzResponse;
 import com.jimjansson.artistinfo.musicbrainz.Relation;
 import com.jimjansson.artistinfo.musicbrainz.ReleaseGroup;
 import com.jimjansson.artistinfo.response.Album;
 import com.jimjansson.artistinfo.response.ArtistInfoResponse;
+import com.jimjansson.artistinfo.util.HttpRequestUtil;
 import com.jimjansson.artistinfo.wikipedia.WikipediaResponse;
 
 import javax.ws.rs.GET;
@@ -26,20 +25,7 @@ import java.util.stream.Collectors;
 @Path("/artistinfo/{mbid}")
 public class ArtistInfo {
 
-    private static final String MUSIC_BRAINZ_REQUEST_TEMPLATE = "http://musicbrainz.org/ws/2/artist/%s?" +
-            "&fmt=json" +
-            "&inc=url-rels+release-groups";
-
-    private static final String COVER_ART_ARCHIVE_REQUEST_TEMPLATE = "http://coverartarchive.org/release-group/%s";
-
-    private static final String WIKIPEDIA_REQUEST_TEMPLATE = "https://en.wikipedia.org/w/api.php?" +
-            "action=query&" +
-            "format=json&" +
-            "prop=extracts&exintro=true&redirects=true&titles=%s";
-
     private static final String WIKIPEDIA_TYPE_STRING = "wikipedia";
-
-    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -51,7 +37,7 @@ public class ArtistInfo {
     @Produces(MediaType.APPLICATION_JSON)
     public ArtistInfoResponse getArtistInfo(@PathParam("mbid") String mbid) {
         try {
-            MusicBrainzResponse musicBrainzResponse = getMusicBrainzResponse(getMusicBrainzHttpRequest(mbid));
+            MusicBrainzResponse musicBrainzResponse = HttpRequestUtil.getMusicBrainzResponse(mbid);
             String wikipediaDescription = getWikipediaDescription(musicBrainzResponse);
             List<Album> albumList = computeAlbumList(musicBrainzResponse);
             return new ArtistInfoResponse(mbid, wikipediaDescription, albumList);
@@ -64,8 +50,8 @@ public class ArtistInfo {
     private String getWikipediaDescription(MusicBrainzResponse musicBrainzResponse) {
         String wikipediaTitle = extractWikipediaTitleFromMusicBrainzResponse(musicBrainzResponse);
         try {
-            WikipediaResponse wikipediaResponse = getWikipediaResponse(getWikipediaHttpRequest(wikipediaTitle));
-            return wikipediaResponse.getQuery().getPages().values().stream().findFirst().get().getExtract();
+            WikipediaResponse wikipediaResponse = HttpRequestUtil.getWikipediaResponse(wikipediaTitle);
+            return wikipediaResponse.getDescription();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,30 +61,6 @@ public class ArtistInfo {
     private List<Album> computeAlbumList(MusicBrainzResponse musicBrainzResponse) {
         return musicBrainzResponse.getReleaseGroups().parallelStream()
                 .map(this::toAlbum).collect(Collectors.toList());
-    }
-
-    private MusicBrainzResponse getMusicBrainzResponse(String request) throws IOException {
-        HttpRequest httpRequest = HttpRequest.get(request);
-        if(httpRequest.ok()) {
-            return MAPPER.readValue(httpRequest.body(), MusicBrainzResponse.class);
-        }
-        return null;
-    }
-
-    private String getMusicBrainzHttpRequest(String mbid) {
-        return String.format(MUSIC_BRAINZ_REQUEST_TEMPLATE, mbid);
-    }
-
-    private WikipediaResponse getWikipediaResponse(String request) throws IOException {
-        HttpRequest httpRequest = HttpRequest.get(request);
-        if(httpRequest.ok()) {
-            return MAPPER.readValue(httpRequest.body(), WikipediaResponse.class);
-        }
-        return null;
-    }
-
-    private String getWikipediaHttpRequest(String title) {
-        return String.format(WIKIPEDIA_REQUEST_TEMPLATE, title);
     }
 
     private String extractWikipediaTitleFromMusicBrainzResponse(MusicBrainzResponse musicBrainzResponse) {
@@ -117,23 +79,10 @@ public class ArtistInfo {
         return null;
     }
 
-    private ReleaseGroupResponse getReleaseGroupResponse(String request) throws IOException {
-        HttpRequest httpRequest = HttpRequest.get(request);
-        if(httpRequest.ok()) {
-            return MAPPER.readValue(httpRequest.body(), ReleaseGroupResponse.class);
-        }
-        return null;
-    }
-
-    private String getCoverArtArchiveReleaseGroupsHttpRequest(String releaseGroupMbid) {
-        return String.format(COVER_ART_ARCHIVE_REQUEST_TEMPLATE, releaseGroupMbid);
-    }
-
     private Album toAlbum(ReleaseGroup releaseGroup) {
         String imageUrl = null;
         try {
-            ReleaseGroupResponse releaseGroupResponse =
-                    getReleaseGroupResponse(getCoverArtArchiveReleaseGroupsHttpRequest(releaseGroup.getId()));
+            ReleaseGroupResponse releaseGroupResponse = HttpRequestUtil.getReleaseGroupResponse(releaseGroup.getId());
             if(releaseGroupResponse != null) {
                 imageUrl = releaseGroupResponse.getImages().get(0).getImage();
             }
@@ -142,5 +91,4 @@ public class ArtistInfo {
         }
         return new Album(releaseGroup.getId(), releaseGroup.getTitle(), imageUrl);
     }
-
 }

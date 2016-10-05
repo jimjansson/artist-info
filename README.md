@@ -1,1 +1,1 @@
-# Artist-info
+# Artist Info

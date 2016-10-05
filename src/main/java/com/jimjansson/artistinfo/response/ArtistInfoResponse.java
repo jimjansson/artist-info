@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo;
+package com.jimjansson.artistinfo.response;
 
 import java.util.List;
 

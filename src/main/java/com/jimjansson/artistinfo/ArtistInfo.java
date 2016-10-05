@@ -2,6 +2,7 @@ package com.jimjansson.artistinfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kevinsawicki.http.HttpRequest;
+import com.jimjansson.artistinfo.musicbrainz.MusicBrainzResponse;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

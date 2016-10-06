@@ -2,7 +2,7 @@
 
 A simple REST service providing music artist information given a MusicBrainz Identifier (https://musicbrainz.org/doc/MusicBrainz_Identifier). For each MusicBrainz Identifier additional artist description will be fetched from Wikipedia (https://en.wikipedia.org/) and cover art will be fetched from from Cover Art Archive (http://coverartarchive.org/).
 
-## Used tools
+## Dependencies
 * Jersey (https://jersey.java.net/)
 * Project Grizzly (https://grizzly.java.net/)
 * Jackson (https://github.com/FasterXML/jackson)

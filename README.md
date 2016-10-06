@@ -14,9 +14,9 @@ A simple REST service providing music artist information given a MusicBrainz Ide
   * Will compile and run test classes
 2. mvn exec:java
   * Will start the REST service (hit enter to stop the application)
-3. Open a browser and try following request "http://localhost:8081/artistinfo/0383dadf-2a4e-4d10-a46a-e9e041da8eb3"
+3. Open a browser and try the following request: http://localhost:8081/artistinfo/0383dadf-2a4e-4d10-a46a-e9e041da8eb3
 
-## MBID Example
+## Sample of MBID's
 * Queen - 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
 * Daft Punk - 056e4f3e-d505-4dad-8ec1-d04f521cbb56
 * Stevie Ray Vaughan - f5426431-f490-4678-ad44-a75c71097bb4

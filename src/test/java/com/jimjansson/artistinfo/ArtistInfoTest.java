@@ -1,35 +1,29 @@
 package com.jimjansson.artistinfo;
 
+import com.jimjansson.artistinfo.response.ArtistInfoResponse;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ArtistInfoTest {
+
+    private static String MBID_QUEEN = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3";
 
     private HttpServer server;
     private WebTarget target;
 
     @Before
     public void setUp() throws Exception {
-        // start the server
         server = ArtistInfoRestServer.startServer();
-        // create the client
         Client c = ClientBuilder.newClient();
-
-        // uncomment the following line if you want to enable
-        // support for JSON in the client (you also have to uncomment
-        // dependency on jersey-media-json module in pom.xml and ArtistInfoRestServer.startServer())
-        // --
-        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
-
         target = c.target(ArtistInfoRestServer.BASE_URI);
     }
 
@@ -39,12 +33,13 @@ public class ArtistInfoTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see that the server responds for the artist Queen
      */
     @Test
-    @Ignore
-    public void testGetIt() {
-        String responseMsg = target.path("artistinfo/1337").request().get(String.class);
-        assertEquals("Find artist info for: 1337", responseMsg);
+    public void testGetArtistInfoQueen() {
+        ArtistInfoResponse artistInfoResponse = target.path("artistinfo/"+MBID_QUEEN).request().get(ArtistInfoResponse.class);
+        assertEquals(MBID_QUEEN, artistInfoResponse.getMbid());
+        assertNotNull(artistInfoResponse.getDescription());
+        assertNotNull(artistInfoResponse.getAlbums());
     }
 }

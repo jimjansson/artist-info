@@ -9,7 +9,7 @@ A simple REST service providing music artist information given a MusicBrainz Ide
 * Http Request (https://github.com/kevinsawicki/http-request)
 * Guava (https://github.com/google/guava)
 
-## How to build (using maven) and use
+## How to build (using maven) and start
 1. mvn clean test
   * Will compile and run test classes
 2. mvn exec:java

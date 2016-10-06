@@ -18,16 +18,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * Root resource (exposed at "artistinfo" path)
  */
 @Path("/artistinfo/{mbid}")
 public class ArtistInfo {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * to the client as "application/json" media type.
      *
-     * @return String that will be returned as a text/plain response.
+     * @return ArtistInfoResponse that will be returned as a application/json response.
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)

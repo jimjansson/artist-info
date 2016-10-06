@@ -12,7 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-public class MyResourceTest {
+public class ArtistInfoTest {
 
     private HttpServer server;
     private WebTarget target;

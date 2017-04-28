@@ -20,6 +20,7 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +34,8 @@ public class ArtistInfo {
      */
     private static final Cache<String, ArtistInfoResponse> simpleCache = CacheBuilder.
             newBuilder().maximumSize(100000).build();
+
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent, when ready,
@@ -50,15 +53,27 @@ public class ArtistInfo {
         } else {
             try {
                 MusicBrainzResponse musicBrainzResponse = HttpRequestUtil.getMusicBrainzResponse(mbid);
-                String wikipediaDescription = getWikipediaDescription(musicBrainzResponse);
-                List<Album> albumList = computeAlbumList(musicBrainzResponse);
-                artistInfoResponse = new ArtistInfoResponse(mbid, wikipediaDescription, albumList);
+                Future<String> wikiDesc = executorService.submit(getWikipediaDescriptionCallable(musicBrainzResponse));
+                Future<List<Album>> albumList = executorService.submit(getAlbumListCallable(musicBrainzResponse));
+                artistInfoResponse = new ArtistInfoResponse(mbid, wikiDesc.get(), albumList.get());
                 simpleCache.put(mbid, artistInfoResponse);
                 asyncResponse.resume(artistInfoResponse);
             } catch (IOException e) {
                 asyncResponse.resume(e);
+            } catch (InterruptedException e) {
+                asyncResponse.resume(e);
+            } catch (ExecutionException e) {
+                asyncResponse.resume(e);
             }
         }
+    }
+
+    private Callable<List<Album>> getAlbumListCallable(MusicBrainzResponse musicBrainzResponse) {
+        return () -> computeAlbumList(musicBrainzResponse);
+    }
+
+    private Callable<String> getWikipediaDescriptionCallable(MusicBrainzResponse musicBrainzResponse) {
+        return () -> getWikipediaDescription(musicBrainzResponse);
     }
 
     private String getWikipediaDescription(MusicBrainzResponse musicBrainzResponse) {

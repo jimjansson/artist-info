@@ -2,15 +2,15 @@ package com.jimjansson.artistinfo.rest.service;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.jimjansson.artistinfo.external.coverartarchive.response.ReleaseGroupResponse;
 import com.jimjansson.artistinfo.external.coverartarchive.request.CoverArtArchiveRequest;
+import com.jimjansson.artistinfo.external.coverartarchive.response.ReleaseGroupResponse;
+import com.jimjansson.artistinfo.external.musicbrainz.request.MusicBrainzRequest;
 import com.jimjansson.artistinfo.external.musicbrainz.response.MusicBrainzResponse;
 import com.jimjansson.artistinfo.external.musicbrainz.response.ReleaseGroup;
 import com.jimjansson.artistinfo.external.wikipedia.request.WikipediaRequest;
+import com.jimjansson.artistinfo.external.wikipedia.response.WikipediaResponse;
 import com.jimjansson.artistinfo.rest.response.Album;
 import com.jimjansson.artistinfo.rest.response.ArtistInfoResponse;
-import com.jimjansson.artistinfo.util.HttpRequestUtil;
-import com.jimjansson.artistinfo.external.wikipedia.response.WikipediaResponse;
 import org.glassfish.jersey.server.ManagedAsync;
 
 import javax.ws.rs.GET;
@@ -54,7 +54,9 @@ public class ArtistInfo {
             asyncResponse.resume(artistInfoResponse);
         } else {
             try {
-                MusicBrainzResponse musicBrainzResponse = HttpRequestUtil.getMusicBrainzResponse(mbid);
+                MusicBrainzResponse musicBrainzResponse = MusicBrainzRequest
+                        .createMusicBrainzRequest(mbid)
+                        .getMusicBrainzResponse();
                 Future<String> wikiDesc = executorService.submit(getWikipediaDescriptionCallable(musicBrainzResponse));
                 Future<List<Album>> albumList = executorService.submit(getAlbumListCallable(musicBrainzResponse));
                 artistInfoResponse = new ArtistInfoResponse(mbid, wikiDesc.get(), albumList.get());

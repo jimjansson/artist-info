@@ -6,6 +6,7 @@ import com.jimjansson.artistinfo.external.coverartarchive.response.ReleaseGroupR
 import com.jimjansson.artistinfo.external.coverartarchive.request.CoverArtArchiveRequest;
 import com.jimjansson.artistinfo.external.musicbrainz.response.MusicBrainzResponse;
 import com.jimjansson.artistinfo.external.musicbrainz.response.ReleaseGroup;
+import com.jimjansson.artistinfo.external.wikipedia.request.WikipediaRequest;
 import com.jimjansson.artistinfo.rest.response.Album;
 import com.jimjansson.artistinfo.rest.response.ArtistInfoResponse;
 import com.jimjansson.artistinfo.util.HttpRequestUtil;
@@ -75,8 +76,9 @@ public class ArtistInfo {
 
     private String getWikipediaDescription(MusicBrainzResponse musicBrainzResponse) {
         try {
-            WikipediaResponse wikipediaResponse = HttpRequestUtil
-                    .getWikipediaResponse(musicBrainzResponse.getWikipediaTitle());
+            WikipediaResponse wikipediaResponse = WikipediaRequest
+                    .createWikipediaRequest(musicBrainzResponse.getWikipediaTitle())
+                    .getWikipediaResponse();
             if(wikipediaResponse != null) {
                 return wikipediaResponse.getDescription();
             }

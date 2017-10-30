@@ -26,20 +26,6 @@ public class HttpRequestUtil {
         return String.format(MUSIC_BRAINZ_REQUEST_TEMPLATE, mbid);
     }
 
-
-    private static final String WIKIPEDIA_REQUEST_TEMPLATE = "https://en.wikipedia.org/w/api.php?" +
-            "action=query&" +
-            "format=json&" +
-            "prop=extracts&exintro=true&redirects=true&titles=%s";
-
-    public static WikipediaResponse getWikipediaResponse(String title) throws IOException {
-        return unmarshall(HttpRequest.get(getWikipediaHttpRequest(title)), WikipediaResponse.class);
-    }
-
-    private static String getWikipediaHttpRequest(String title) {
-        return String.format(WIKIPEDIA_REQUEST_TEMPLATE, title);
-    }
-
     private static <T> T unmarshall(HttpRequest httpRequest, Class<T> valueType) throws IOException {
         if(httpRequest.ok()) {
             return MAPPER.readValue(httpRequest.body(), valueType);

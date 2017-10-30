@@ -2,7 +2,7 @@ package com.jimjansson.artistinfo.external.coverartarchive.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.jimjansson.artistinfo.external.coverartarchive.ReleaseGroupResponse;
+import com.jimjansson.artistinfo.external.coverartarchive.response.ReleaseGroupResponse;
 
 import java.io.IOException;
 

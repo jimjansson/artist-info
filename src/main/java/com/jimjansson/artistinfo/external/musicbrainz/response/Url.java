@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.external.musicbrainz;
+package com.jimjansson.artistinfo.external.musicbrainz.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -2,9 +2,8 @@ package com.jimjansson.artistinfo.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.jimjansson.artistinfo.external.coverartarchive.ReleaseGroupResponse;
-import com.jimjansson.artistinfo.external.musicbrainz.MusicBrainzResponse;
-import com.jimjansson.artistinfo.external.wikipedia.WikipediaResponse;
+import com.jimjansson.artistinfo.external.musicbrainz.response.MusicBrainzResponse;
+import com.jimjansson.artistinfo.external.wikipedia.response.WikipediaResponse;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.external.wikipedia;
+package com.jimjansson.artistinfo.external.wikipedia.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,5 +30,22 @@ public class WikipediaResponse {
             }
         }
         return null;
+    }
+
+    /**
+     * Created by Jim on 2016-10-05.
+     */
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    public static class Page {
+
+        private String extract;
+
+        String getExtract() {
+            return extract;
+        }
+
+        public void setExtract(String extract) {
+            this.extract = extract;
+        }
     }
 }

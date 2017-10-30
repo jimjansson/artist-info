@@ -1,6 +1,7 @@
-package com.jimjansson.artistinfo.external.coverartarchive;
+package com.jimjansson.artistinfo.external.coverartarchive.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jimjansson.artistinfo.external.coverartarchive.response.Image;
 
 import java.util.List;
 

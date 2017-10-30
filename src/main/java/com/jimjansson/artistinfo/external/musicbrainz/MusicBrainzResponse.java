@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.musicbrainz;
+package com.jimjansson.artistinfo.external.musicbrainz;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,7 +39,7 @@ public class MusicBrainzResponse {
         this.name = name;
     }
 
-    public List<Relation> getRelations() {
+    private List<Relation> getRelations() {
         return relations;
     }
 

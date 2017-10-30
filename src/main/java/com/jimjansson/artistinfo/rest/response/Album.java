@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.response;
+package com.jimjansson.artistinfo.rest.response;
 
 /**
  * Created by Jim on 2016-10-05.

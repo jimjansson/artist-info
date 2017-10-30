@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.coverartarchive;
+package com.jimjansson.artistinfo.external.coverartarchive;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

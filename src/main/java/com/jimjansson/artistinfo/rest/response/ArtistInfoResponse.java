@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.response;
+package com.jimjansson.artistinfo.rest.response;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.musicbrainz;
+package com.jimjansson.artistinfo.external.musicbrainz;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +15,7 @@ public class Relation {
     private String type;
     private Url url;
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
@@ -27,7 +27,7 @@ public class Relation {
         this.url = url;
     }
 
-    public Url getUrl() {
+    Url getUrl() {
         return url;
     }
 }

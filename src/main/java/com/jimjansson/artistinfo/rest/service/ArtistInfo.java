@@ -1,14 +1,14 @@
-package com.jimjansson.artistinfo.service;
+package com.jimjansson.artistinfo.rest.service;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.jimjansson.artistinfo.coverartarchive.ReleaseGroupResponse;
-import com.jimjansson.artistinfo.musicbrainz.MusicBrainzResponse;
-import com.jimjansson.artistinfo.musicbrainz.ReleaseGroup;
-import com.jimjansson.artistinfo.response.Album;
-import com.jimjansson.artistinfo.response.ArtistInfoResponse;
+import com.jimjansson.artistinfo.external.coverartarchive.ReleaseGroupResponse;
+import com.jimjansson.artistinfo.external.musicbrainz.MusicBrainzResponse;
+import com.jimjansson.artistinfo.external.musicbrainz.ReleaseGroup;
+import com.jimjansson.artistinfo.rest.response.Album;
+import com.jimjansson.artistinfo.rest.response.ArtistInfoResponse;
 import com.jimjansson.artistinfo.util.HttpRequestUtil;
-import com.jimjansson.artistinfo.wikipedia.WikipediaResponse;
+import com.jimjansson.artistinfo.external.wikipedia.WikipediaResponse;
 import org.glassfish.jersey.server.ManagedAsync;
 
 import javax.ws.rs.GET;

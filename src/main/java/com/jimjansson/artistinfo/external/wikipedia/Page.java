@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.wikipedia;
+package com.jimjansson.artistinfo.external.wikipedia;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,7 +10,7 @@ public class Page {
 
     private String extract;
 
-    public String getExtract() {
+    String getExtract() {
         return extract;
     }
 

@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.musicbrainz;
+package com.jimjansson.artistinfo.external.musicbrainz;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,7 +10,7 @@ public class Url {
 
     private String resource;
 
-    public String getResource() {
+    String getResource() {
         return resource;
     }
 

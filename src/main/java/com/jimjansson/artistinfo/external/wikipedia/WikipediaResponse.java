@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.wikipedia;
+package com.jimjansson.artistinfo.external.wikipedia;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,7 +13,7 @@ public class WikipediaResponse {
 
     private Query query;
 
-    public Query getQuery() {
+    private Query getQuery() {
         return query;
     }
 

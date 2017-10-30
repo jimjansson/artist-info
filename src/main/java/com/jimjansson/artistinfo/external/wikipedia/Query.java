@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo.wikipedia;
+package com.jimjansson.artistinfo.external.wikipedia;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -16,7 +16,7 @@ public class Query {
         this.pages = pages;
     }
 
-    public Map<String, Page> getPages() {
+    Map<String, Page> getPages() {
         return pages;
     }
 }

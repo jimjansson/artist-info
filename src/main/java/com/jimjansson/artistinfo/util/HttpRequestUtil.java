@@ -41,17 +41,6 @@ public class HttpRequestUtil {
         return String.format(WIKIPEDIA_REQUEST_TEMPLATE, title);
     }
 
-    private static final String COVER_ART_ARCHIVE_REQUEST_TEMPLATE = "http://coverartarchive.org/release-group/%s";
-
-    public static ReleaseGroupResponse getReleaseGroupResponse(String releaseGroupMbid) throws IOException {
-        return unmarshall(HttpRequest.get(getCoverArtArchiveReleaseGroupsHttpRequest(releaseGroupMbid)),
-                ReleaseGroupResponse.class);
-    }
-
-    private static String getCoverArtArchiveReleaseGroupsHttpRequest(String releaseGroupMbid) {
-        return String.format(COVER_ART_ARCHIVE_REQUEST_TEMPLATE, releaseGroupMbid);
-    }
-
     private static <T> T unmarshall(HttpRequest httpRequest, Class<T> valueType) throws IOException {
         if(httpRequest.ok()) {
             return MAPPER.readValue(httpRequest.body(), valueType);

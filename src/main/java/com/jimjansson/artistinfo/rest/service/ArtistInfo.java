@@ -3,6 +3,7 @@ package com.jimjansson.artistinfo.rest.service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.jimjansson.artistinfo.external.coverartarchive.ReleaseGroupResponse;
+import com.jimjansson.artistinfo.external.coverartarchive.request.CoverArtArchiveRequest;
 import com.jimjansson.artistinfo.external.musicbrainz.MusicBrainzResponse;
 import com.jimjansson.artistinfo.external.musicbrainz.ReleaseGroup;
 import com.jimjansson.artistinfo.rest.response.Album;
@@ -93,7 +94,9 @@ public class ArtistInfo {
     private Album toAlbum(ReleaseGroup releaseGroup) {
         String imageUrl = null;
         try {
-            ReleaseGroupResponse releaseGroupResponse = HttpRequestUtil.getReleaseGroupResponse(releaseGroup.getId());
+            ReleaseGroupResponse releaseGroupResponse = CoverArtArchiveRequest
+                    .createCoverArtArchiveRequest(releaseGroup.getId())
+                    .getReleaseGroupResponse();
             if(releaseGroupResponse != null) {
                 imageUrl = releaseGroupResponse.getImages().get(0).getImage();
             }

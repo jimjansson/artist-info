@@ -58,11 +58,7 @@ public class ArtistInfo {
                 artistInfoResponse = new ArtistInfoResponse(mbid, wikiDesc.get(), albumList.get());
                 simpleCache.put(mbid, artistInfoResponse);
                 asyncResponse.resume(artistInfoResponse);
-            } catch (IOException e) {
-                asyncResponse.resume(e);
-            } catch (InterruptedException e) {
-                asyncResponse.resume(e);
-            } catch (ExecutionException e) {
+            } catch (IOException | InterruptedException | ExecutionException e) {
                 asyncResponse.resume(e);
             }
         }

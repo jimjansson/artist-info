@@ -1,4 +1,4 @@
-package com.jimjansson.artistinfo;
+package com.jimjansson.artistinfo.service;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

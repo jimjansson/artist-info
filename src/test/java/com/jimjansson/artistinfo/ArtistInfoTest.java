@@ -1,6 +1,7 @@
 package com.jimjansson.artistinfo;
 
 import com.jimjansson.artistinfo.response.ArtistInfoResponse;
+import com.jimjansson.artistinfo.service.ArtistInfoRestServer;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
